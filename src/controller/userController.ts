@@ -1,6 +1,8 @@
 import { RequestHandler } from "express";
 import { User, IUser } from "../models/user";
 import { HydratedDocument,Document } from "mongoose";
+import {auth,createtoken,verifytoken} from '../service/user.auth'
+
 
 export const CreateUser: RequestHandler<any,any,IUser> = async (
   req,
@@ -55,3 +57,18 @@ export const updateUser: RequestHandler<{ id: number }, any, IUser> = async (req
     return res.status(400).send(error);
   }
 }
+
+export const login: RequestHandler<any,any,IUser> = async (
+  req,
+  res
+) => {
+  try {
+   const user=await auth(req.body.email,req.body.password)
+
+   const token = createtoken(user)
+  
+    return res.send({token});
+  } catch (e:any) {
+    return res.status(400).send({error:e.message});
+  }
+};

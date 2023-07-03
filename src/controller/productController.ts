@@ -40,7 +40,7 @@ export const getProduct: RequestHandler = async (
   }
 };
 
-export const updateProduct: RequestHandler<{ id: number }, any, IProduct> = async (req, res) => {
+export const updateProduct: RequestHandler<any, any, IProduct> = async (req, res) => {
   try {
     const updatedProduct = await Product.findByIdAndUpdate(
       req.params.id,
