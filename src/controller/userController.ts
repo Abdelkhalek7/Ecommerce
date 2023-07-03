@@ -2,6 +2,7 @@ import { RequestHandler } from "express";
 import { User, IUser } from "../models/user";
 import { HydratedDocument,Document } from "mongoose";
 import {auth,createtoken,verifytoken} from '../service/user.auth'
+import {  Request, Response } from "express";
 
 
 export const CreateUser: RequestHandler<any,any,IUser> = async (
@@ -42,10 +43,10 @@ export const getUser: RequestHandler = async (
   }
 };
 
-export const updateUser: RequestHandler<{ id: number }, any, IUser> = async (req, res) => {
+export const updateUser: RequestHandler<any, any, IUser> = async (req:{body:IUser,user?:IUser}, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(
-      req.params.id,
+      req.user!._id,
       req.body,
       { new: true }
     );

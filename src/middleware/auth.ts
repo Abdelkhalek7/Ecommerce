@@ -1,8 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { verifytoken } from  "../service/user.auth";
-import {UserType} from '../models/user'
+import {UserType,IUser} from '../models/user'
 export const auth= (userType:UserType)=>{return(
-  request: Request,
+  request: Request&{body:IUser,user?:IUser},
   response: Response,
   next: NextFunction
 )=> {
@@ -24,6 +24,7 @@ try {
     throw new Error("Unauthorized ,only for admin");
 
   }
+  request.user=user;
 
   next();
 } catch (error:any) {
