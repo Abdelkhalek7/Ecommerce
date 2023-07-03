@@ -5,6 +5,8 @@ import express  from "express";
 import connect from './db/connect'
 
 import productRouter from './routes/product'
+import userRouter from './routes/user'
+
 var bodyParser = require('body-parser')
 
 const app=express();
@@ -20,6 +22,8 @@ app.use(express.json());
 // Middleware for parsing URL-encoded bodies
 app.use(express.urlencoded({ extended: true }))
 app.use("/product",productRouter)
+app.use("/user",userRouter)
+
 
 
 app.get('/api/hi',(req, res) => {
